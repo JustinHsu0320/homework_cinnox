@@ -2,11 +2,10 @@
 ```
 # Clone
 $ git clone https://github.com/JustinHsu0320/homework_cinnox
-
-cd homework_cinnox
+$ cd homework_cinnox
 
 # Install Packages
-go mod tidy
+$ go mod tidy
 
 # Use Makefile to set up DEV env by Docker
 $ make network
