@@ -13,15 +13,7 @@ const (
 	minPoolSize = 1
 )
 
-type Queries struct{
-	InsertUser(client *mongo.Client, user User) error
-	FindUser(client *mongo.Client, username string) (User, error)
-	UpdateUserEmail(client *mongo.Client, username string, newEmail string) error
-	DeleteUser(client *mongo.Client, username string) error
-}
-
-func GetMongoDBClientPool(url string) (*mongo.Client, error) {
-	ctx := context.Background()
+func GetMongoDBClientPool(ctx context.Context, url string) (*mongo.Client, error) {
 
 	// Set up MongoDB client options
 	clientOptions := options.Client().ApplyURI(url).
@@ -33,7 +25,6 @@ func GetMongoDBClientPool(url string) (*mongo.Client, error) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer client.Disconnect(ctx)
 
 	return client, nil
 }

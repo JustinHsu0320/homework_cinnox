@@ -4,6 +4,10 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
+var (
+	db = "cinnox"
+)
+
 // SQLStore provides all functions to execute SQL queries and transactions
 type MongoStore struct {
 	connPool *mongo.Client

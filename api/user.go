@@ -3,8 +3,8 @@ package api
 import (
 	"net/http"
 
-	db "github.com/JustinHsu0320/homework_cinnox/db/mongo"
 	"github.com/gin-gonic/gin"
+	db "homework_cinnox/db/mongo"
 )
 
 type createUserRequest struct {
@@ -40,7 +40,7 @@ func (server *Server) InsertUser(ctx *gin.Context) {
 		Email:    req.Email,
 	}
 
-	err := db.InsertUser(ctx, arg)
+	err := server.store.InsertUser(arg)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return

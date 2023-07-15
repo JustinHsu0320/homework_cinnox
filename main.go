@@ -1,33 +1,46 @@
 package main
 
 import (
+	"context"
 	"log"
 
-	"github.com/JustinHsu0320/homework_cinnox/api"
-	db "github.com/JustinHsu0320/homework_cinnox/db/mongo"
-	"github.com/JustinHsu0320/homework_cinnox/util"
+	"homework_cinnox/api"
+	db "homework_cinnox/db/mongo"
+	"homework_cinnox/util"
+
+	"github.com/line/line-bot-sdk-go/v7/linebot"
 )
 
 func main() {
+
+	ctx := context.Background()
+
 	// env
 	config, err := util.LoadConfig(".")
 	if err != nil {
-		log.Println("cannot load config")
+		log.Fatal("cannot load config")
 	}
 
-	// mongodb conn pool
-	pool, err := db.GetMongoDBClientPool(config.DBSource)
+	// MongoDB Conn Pool
+	pool, err := db.GetMongoDBClientPool(ctx, config.DBSource)
 	if err != nil {
-		log.Println("cannot connect mongodb")
+		log.Fatal("cannot connect mongodb")
+	}
+	defer pool.Disconnect(ctx)
+
+	// LINE Bot
+	bot, err := linebot.New(config.LineChannelSecret, config.LineChannelAccessToken)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	store := db.NewStore(pool)
 
-	runGinServer(config, store)
+	runGinServer(config, store, bot)
 }
 
-func runGinServer(config util.Config, store db.Store) {
-	server, err := api.NewServer(config, store)
+func runGinServer(config util.Config, store *db.MongoStore, bot *linebot.Client) {
+	server, err := api.NewServer(config, store, bot)
 	if err != nil {
 		log.Println("cannot create server")
 	}
