@@ -60,7 +60,7 @@ func (server *Server) PushMessage(ctx *gin.Context) {
 		Message string `json:"message"`
 	}
 	if err := ctx.BindJSON(&request); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		ctx.JSON(http.StatusBadRequest, errorResponse(err))
 		return
 	}
 
@@ -73,7 +73,7 @@ func (server *Server) PushMessage(ctx *gin.Context) {
 	// Send the message to the recipient
 	if _, err := server.bot.PushMessage(recipientID, message).Do(); err != nil {
 		log.Println(err)
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to send message"})
+		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
 

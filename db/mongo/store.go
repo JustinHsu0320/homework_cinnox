@@ -8,7 +8,7 @@ var (
 	db = "cinnox"
 )
 
-// SQLStore provides all functions to execute SQL queries and transactions
+// MongoStore provides all functions to execute queries
 type MongoStore struct {
 	connPool *mongo.Client
 }
