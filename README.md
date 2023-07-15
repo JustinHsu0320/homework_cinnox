@@ -8,7 +8,7 @@ cd homework_cinnox
 # Install Packages
 go mod tidy
 
-# Use Makefile to set up DEV env
+# Use Makefile to set up DEV env by Docker
 $ make network
 $ make mongodb
 $ make collection NAME=users
@@ -32,6 +32,6 @@ $ ngrok http 8080
     "message": "Good day, mate 👍"
 }
 
-3. Get individual users from messages
+# 3. Get individual users from messages
 [GET]  http://0.0.0.0:8080/messages/users
 ```
