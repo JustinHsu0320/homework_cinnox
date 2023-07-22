@@ -17,6 +17,10 @@ $ make server
 
 # Expose APP for Linebot
 $ ngrok http 8080
+
+# test Line Bot by cli
+$ make build
+$ ./main testlinebot --secret=X --token=Y
 ```
 
 ## APIs

@@ -10,4 +10,7 @@ collection:
 server:
 	go run main.go
 
+build:
+	go build -o main main.go
+
 .PHONY: network mongodb collection server
